@@ -1,28 +1,40 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from "react";
+import CardList from "./cardlist";
+import SearchBox from "./searchbox";
+import {Avtar} from "./avtar";
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+
+class App  extends Component {
+  constructor(){
+    super()
+    this.state = {
+      Avtar: Avtar,
+      searchfield: '',
+      dummy: Avtar,
+      real: Avtar,
+    }
+  }
+
+onSearchChange = (searchString) => {
+  // this.setState({Avtar: filteredName});
+  const {dummy} = this.state;
+  console.log('Line ---- 21',dummy);
+  const filteredName = dummy.filter(Avtar =>
+    Avtar.name.toLowerCase().includes(searchString.toLowerCase()));
+  this.setState({
+    real: filteredName
+  })
+}
+
+  render(){
+    const {real} = this.state;
+    return(
+      <div className="app-content">
+        <h1>List</h1>
+        <SearchBox searchChange={this.onSearchChange}/>
+        <CardList  filteredData={real}/>
       </div>
     );
   }
 }
-
 export default App;
